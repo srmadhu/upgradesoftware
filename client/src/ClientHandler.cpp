@@ -24,11 +24,11 @@
 #define PORT     8080
 #define MAXLINE 1024
 
-void ClientHandler:SendMessage(MsgTypeEnum msgType)
+void ClientHandler::SendMessage(MsgTypeEnum msgType)
 {
     UpdateMsg_t msg;
     msg.msgType = msgType;
-    m_udpClt.Send(&msg, sizeof(msg));
+    m_UdpClt.Send(&msg, sizeof(msg));
 }
 void ClientHandler::SendRegister()
 {
@@ -61,7 +61,6 @@ void ClientHandler::HandleClientMessage(void *Buffer, size_t BufLen, std::string
         {
             std::cout<<"SendFile Request Received from "<<PeerAddr<<std::endl;
             std::cout<<"Message buffer length "<<msg->Length<<std::endl;
-            std::cout<<"Message counter "<<msg->counter<<std::endl;
             size += msg->Length;
             std::cout<<"Total Size = "<<size<<std::endl;
             m_FileWriter.WriteFile(msg->Buffer, msg->Length);

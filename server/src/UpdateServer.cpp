@@ -76,8 +76,6 @@ class UpdateServer
                     UpdateMsg_t msg;
                     msg.msgType = MSG_SENDFILE;
                     memcpy(msg.Buffer, Buffer, bytesRead);
-                    msg.counter = ++count;
-                    std::cout<<"Sending "<<bytesRead<<"count = "<<msg.counter<<std::endl;
                     msg.Length = bytesRead;
                     udpServ.Send(&msg, sizeof(msg));
                 }
