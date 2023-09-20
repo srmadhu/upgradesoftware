@@ -26,8 +26,6 @@
 #define PORT     8080
 #define MAXLINE 1024
 
-void verify_class_dlopen();
-
 class UdpClientHandler: public ClientHandler
 {
     public:

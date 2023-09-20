@@ -1,7 +1,13 @@
 #include <ServerHandler.hpp>
 
-#define NEWBUFSIZ 1024
 
+/* Function : HandleClientMessage
+ * Desc     : Received client message handler
+ * Input    : Buffer - Received message
+ *            BufLen - Length of recived message
+ *            PeerAddr - Remote Peer Address
+ * Outpu    : None
+ */
 void ServerHandler::HandleClientMessage(void *Buffer, size_t BufLen, std::string PeerAddr)
 {
     UpdateMsg_t *msg = (UpdateMsg_t *) Buffer;
@@ -13,7 +19,7 @@ void ServerHandler::HandleClientMessage(void *Buffer, size_t BufLen, std::string
             std::cout<<"Register Request Received from "<<PeerAddr<<std::endl;
             UpdateMsg_t msg;
             msg.msgType = MSG_CLREGDONE;
-            udpServ.Send(&msg, sizeof(msg));
+            m_UdpServ.Send(&msg, sizeof(msg));
             break;
         }
         case MSG_CLDEREGISTER:
@@ -23,6 +29,11 @@ void ServerHandler::HandleClientMessage(void *Buffer, size_t BufLen, std::string
         }
     }
 }
+/* Function : HandleCliMessage
+ * Desc     : cmdLine to handled from cli
+ * Input    : cmdLine - command Line 
+ * Output   : None
+ */
 void ServerHandler::HandleCliMessage(std::string cmdLine)
 {
     std::stringstream ss(cmdLine);
@@ -38,14 +49,14 @@ void ServerHandler::HandleCliMessage(std::string cmdLine)
     int count = 0;
     if (cmd[0] == PUSH_COMMAND)
     {
-        char Buffer[NEWBUFSIZ]={0};
+        char Buffer[BUFSIZE]={0};
         UpdateMsg_t msg;
 
         msg.msgType = MSG_SWDLFLNAME;
         strncpy(msg.Buffer, cmd[1].c_str(), cmd[1].length());
         msg.Length = cmd[1].length();
 
-        udpServ.Send(&msg, sizeof(msg));
+        m_UdpServ.Send(&msg, sizeof(msg));
         std::string FileName = cmd[1];
         FileReader fr(FileName);
         while( (bytesRead = fr.ReadFile(Buffer, sizeof(Buffer))) > 0)
@@ -54,20 +65,27 @@ void ServerHandler::HandleCliMessage(std::string cmdLine)
             msg.msgType = MSG_SWDLFILE;
             memcpy(msg.Buffer, Buffer, bytesRead);
             msg.Length = bytesRead;
-            udpServ.Send(&msg, sizeof(msg));
+            m_UdpServ.Send(&msg, sizeof(msg));
         }
 
         msg.msgType = MSG_SWDLCMPT;
-        udpServ.Send(&msg, sizeof(msg));
+        m_UdpServ.Send(&msg, sizeof(msg));
     }
 }
+
+
+/* Function : Instance
+ * Desc     : Create Server Handler instance
+ * Input    : Port number 
+ * Output   : Server Handler
+ */
 void ServerHandler::HandleEvents()
 {
  
     for(;;)
     {
         int ready = 0, maxFd = 0;
-        int udpFd = udpServ.GetSocketFd();
+        int udpFd = m_UdpServ.GetSocketFd();
         struct timeval tv;
         fd_set readFdSet;
         
@@ -94,7 +112,7 @@ void ServerHandler::HandleEvents()
             size_t Len = sizeof(msg);
             std::string PeerAddr;
             std::cout<<"udp fd is set "<<std::endl;
-            udpServ.Recv(&msg, Len, PeerAddr);
+            m_UdpServ.Recv(&msg, Len, PeerAddr);
             HandleClientMessage(&msg, Len, PeerAddr);
         }
         else if (FD_ISSET(fileno(stdin), &readFdSet))

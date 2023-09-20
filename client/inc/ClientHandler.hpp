@@ -25,7 +25,7 @@
 #define PORT     8080
 #define MAXLINE 1024
 
-void verify_class_dlopen();
+void PrintSoftwareVersion();
 
 class ClientHandler
 {
@@ -114,7 +114,7 @@ class ClientHandler
 #ifdef DEBUG
             std::cout<<"ClientHandler:: constructor is called"<<std::endl;
 #endif
-            verify_class_dlopen();
+            PrintSoftwareVersion();
         }
         /* Virtual Destructor */
         virtual ~ClientHandler()

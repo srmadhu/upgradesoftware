@@ -75,7 +75,7 @@ void ClientHandler::HandleClientMessage(void *Buffer, size_t BufLen, std::string
             m_FileWriter.CloseFile();
             remove("libfunctional.so");
             symlink(m_FileName.c_str(), "libfunctional.so");
-            verify_class_dlopen();
+            PrintSoftwareVersion();
         }
     }
 }

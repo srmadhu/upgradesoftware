@@ -73,7 +73,7 @@ void UdpClientHandler::RecvMessage()
             std::getline(std::cin, cmdInput);
             if ( cmdInput  == "show version")
             {
-                verify_class_dlopen();
+                PrintSoftwareVersion();
             }
             else if ( cmdInput == "exit")
             {

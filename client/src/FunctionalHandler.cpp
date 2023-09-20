@@ -9,7 +9,12 @@
 #include <ActionReceiver.hpp>
 #include <pthread.h>
 
-void verify_class_dlopen()
+/* Function : PrintSoftwareVersion
+ * Desc     : Printing version using dlopen of upgraded software
+ * Input    : None
+ * Output   : None
+ */
+void PrintSoftwareVersion()
 {
     void *handle;
     char *error;
