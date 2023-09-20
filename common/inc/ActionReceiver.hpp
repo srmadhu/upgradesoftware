@@ -11,7 +11,9 @@ class ActionReceiver
     public:
         ActionReceiver(): actionType (0)
         {
-            std::cout<<"Action Template constructor called"<<std::endl;
+#ifdef DEBUG
+            std::cout<<"Action Template1 constructor called"<<stendl;
+#endif
         }
         void setActionType(int argActionType)
         {
@@ -20,7 +22,9 @@ class ActionReceiver
         virtual bool executeAction() = 0;
         virtual ~ActionReceiver()
         {
-            std::cout<<"Action Template destructor called"<<std::endl;
+#ifdef DEBUG
+            std::cout<<"Action Template1 destructor called"<<std::endl;
+#endif
         }
 };
 

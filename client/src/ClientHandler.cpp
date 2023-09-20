@@ -45,7 +45,9 @@ void ClientHandler::HandleClientMessage(void *Buffer, size_t BufLen, std::string
         }
         case MSG_SWDLFLNAME:
         {
+#ifdef DEBUG
             std::cout<<"FileName Request Received from "<<PeerAddr<<std::endl;
+#endif
             msg->Buffer[msg->Length] = '\0';
             m_FileName = msg->Buffer;
 #ifdef DEBUG

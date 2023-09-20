@@ -15,14 +15,17 @@ class ActionHandler : public ActionReceiver
                 res = callPrintVersion();
             }
             else
-                std::cout<<"Invalid Action Type"<<std::endl;
+                std::cerr<<"Invalid Action Type"<<std::endl;
             return res;
         }
         bool callPrintVersion()
         {
+            std::cout<<std::endl;
+            std::cout<<"product version :"<<std::endl;
             std::cout<<"Major = "<<majorVersion<<std::endl;
             std::cout<<"Minor = "<<minorVersion<<std::endl;
             std::cout<<"productName = "<<productName<<std::endl;
+            std::cout<<std::endl;
             return true;
         }
     private:

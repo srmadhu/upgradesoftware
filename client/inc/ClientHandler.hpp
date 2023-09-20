@@ -74,9 +74,9 @@ class ClientHandler
          */
         void TimerCallback()
         {
-            if ( GetClientState() == CL_STATE_REGISTER ||
-                            GetClientState() == CL_STATE_INIT)
-            {
+            if (m_ClientState == CL_STATE_INIT ||
+                   m_ClientState == CL_STATE_REGISTER)
+            {                
                 SendRegister();
             }
         }

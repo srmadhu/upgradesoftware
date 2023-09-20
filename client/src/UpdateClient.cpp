@@ -28,8 +28,9 @@ int main(int argc, char* argv[])
         std::cout<<"Exception : "<<e.what()<<" occured."<<std::endl;
         return EXIT_FAILURE;
     }
-
+#ifdef DEBUG
     std::cout<<"Main:: Connecting to Server "<<IpAddress<<":"<<Port<<std::endl;
+#endif
 
     UdpClientHandler& cltHandler = UdpClientHandler::Instance(IpAddress, Port);
     cltHandler.RecvMessage();

@@ -51,12 +51,16 @@ class ServerHandler
         /* Constructor to fill IPaddress */
         ServerHandler(std::string IpAddress, int Port): m_UdpServ(IpAddress, Port)
         {
+#ifdef DEBUG
             std::cout<<"Listening on "<<IpAddress<<std::endl;
+#endif
         }
         /* Constructore to fill Port */
         ServerHandler(int Port): m_UdpServ("", Port)
         {
+#ifdef DEBUG
             std::cout<<"Listen on all ip address "<<std::endl;
+#endif
         }
        /* Transport is UDP. This can be factory of transport machanisms. */
         UdpServer m_UdpServ;

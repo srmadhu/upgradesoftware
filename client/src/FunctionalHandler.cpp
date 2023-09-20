@@ -23,7 +23,7 @@ void PrintSoftwareVersion()
     /* dlopen to open the file */
     handle = dlopen(FileName, RTLD_LAZY);
     if (!handle) {
-        std::cout<<"Error opening file : "<<dlerror()<<std::endl;
+        std::cerr<<"Error opening file : "<<dlerror()<<std::endl;
         return;
     }
     /* clear existing errors. */
@@ -32,7 +32,7 @@ void PrintSoftwareVersion()
     create_t *CreateFunction = (create_t *) dlsym(handle, "createActionHandler");
 
     if ((error = dlerror()) != NULL)  {
-        std::cout<<"Symbol not found : "<<dlerror()<<std::endl;
+        std::cerr<<"Symbol not found : "<<dlerror()<<std::endl;
         dlclose(handle);
         return;
     }
@@ -40,7 +40,7 @@ void PrintSoftwareVersion()
     destroy_t *DeleteFunction = (destroy_t *) dlsym(handle, "destroyActionHandler");
 
     if ((error = dlerror()) != NULL)  {
-        std::cout<<"Symbol not found : "<<dlerror()<<std::endl;
+        std::cerr<<"Symbol not found : "<<dlerror()<<std::endl;
         dlclose(handle);
         return;
     }

@@ -12,7 +12,9 @@ int FileReader::ReadFile(char *Buffer, int BufSize)
 {
     if (m_Ifs.eof() || m_Ifs.bad())
     {
+ #ifdef DEBUG
         std::cout<<"END OF FILE reached."<<std::endl;
+ #endif
         return -1;
     }
     m_Ifs.read(Buffer, BufSize);

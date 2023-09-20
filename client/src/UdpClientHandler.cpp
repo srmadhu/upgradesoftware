@@ -34,10 +34,10 @@
 void UdpClientHandler::RecvMessage()
 {
     std::cout<<std::endl<<"NxtClient# ";
+    int udpFd = m_UdpClt.GetSocketFd();
     for(;;)
     {
         int ready = 0, maxFd = 0;
-        int udpFd = m_UdpClt.GetSocketFd();
         struct timeval tv;
         fd_set readFdSet;
         maxFd = std::max(udpFd, 0) + 1;

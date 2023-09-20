@@ -16,7 +16,9 @@ void ServerHandler::HandleClientMessage(void *Buffer, size_t BufLen, std::string
     {
         case MSG_CLREGISTER:
         {
+#ifdef DEBUG
             std::cout<<"Register Request Received from "<<PeerAddr<<std::endl;
+#endif
             UpdateMsg_t msg;
             msg.msgType = MSG_CLREGDONE;
             m_UdpServ.Send(&msg, sizeof(msg));
@@ -24,7 +26,9 @@ void ServerHandler::HandleClientMessage(void *Buffer, size_t BufLen, std::string
         }
         case MSG_CLDEREGISTER:
         {
-            std::cout<<"Register Request Received from "<<PeerAddr<<std::endl;
+ #ifdef DEBUG
+            std::cout<<"DeRegister Request Received from "<<PeerAddr<<std::endl;
+ #endif
             break;
         }
     }
@@ -56,9 +60,14 @@ void ServerHandler::HandleCliMessage(std::string cmdLine)
         strncpy(msg.Buffer, cmd[1].c_str(), cmd[1].length());
         msg.Length = cmd[1].length();
 
-        m_UdpServ.Send(&msg, sizeof(msg));
         std::string FileName = cmd[1];
         FileReader fr(FileName);
+        if(!fr.FileExists())
+        {
+            std::cerr<<"File "<<FileName<<" open failed"<<std::endl;
+            return;
+        }
+        m_UdpServ.Send(&msg, sizeof(msg));
         while( (bytesRead = fr.ReadFile(Buffer, sizeof(Buffer))) > 0)
         {
             UpdateMsg_t msg;
@@ -102,7 +111,7 @@ void ServerHandler::HandleEvents()
         /* if select returned error, still continue; */
         if ( ready < 0)
         {
-            std::cout<<"Select return socket error : "<<errno<<std::endl;
+            std::cerr<<"Select return socket error : "<<errno<<std::endl;
             continue;
         }
  
@@ -111,7 +120,9 @@ void ServerHandler::HandleEvents()
             UpdateMsg_t msg;
             size_t Len = sizeof(msg);
             std::string PeerAddr;
+#ifdef DEBUG
             std::cout<<"udp fd is set "<<std::endl;
+#endif
             m_UdpServ.Recv(&msg, Len, PeerAddr);
             HandleClientMessage(&msg, Len, PeerAddr);
         }
@@ -121,8 +132,10 @@ void ServerHandler::HandleEvents()
             char cmdInput[MAX_CMD_LENGTH];
             std::cin.getline(cmdInput, sizeof(cmdInput));
             std::string input(cmdInput);
+#ifdef DEBUG
             std::cout<<"standard input is set "<<input<<std::endl;
             std::cout<<"Pusing software to client "<<std::endl;
+#endif
             if (input == "exit")
                 return;
             HandleCliMessage(input);

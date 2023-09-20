@@ -37,7 +37,9 @@ void UdpClient::Send(const void *Buffer, size_t BufLen)
 void UdpClient::Recv(void *Buffer, size_t BufLen, std::string &PeerAddr)
 {
     char str[INET_ADDRSTRLEN];
-    m_UdpSkt.RecvFrom(Buffer, BufLen, m_RemoteAddr, m_Len);
+    struct sockaddr_in RemoteAddr;
+    socklen_t Len;
+    m_UdpSkt.RecvFrom(Buffer, BufLen, RemoteAddr, Len);
     inet_ntop(AF_INET, &(m_RemoteAddr.sin_addr), str, INET_ADDRSTRLEN);
     PeerAddr = str;
 }

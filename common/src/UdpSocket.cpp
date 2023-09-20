@@ -104,7 +104,7 @@ int UdpSocket::SendTo(const void* Buffer, const size_t BufLen, std::string IpAdd
 #endif
         return bytesSent;
     } else {
-        std::cerr<<"Sent failed "<<errno<<std::endl;
+        std::cerr<<"Send1 failed "<<errno<<std::endl;
         return -1;
     }
 }
@@ -133,7 +133,7 @@ int UdpSocket::SendTo(const void* Buffer, const size_t BufLen, struct sockaddr_i
 #endif
         return bytesSent;
     } else {
-        std::cerr<<"Sent failed "<<errno<<std::endl;
+        std::cerr<<"Send2 failed "<<errno<<std::endl;
         return -1;
     }
 }

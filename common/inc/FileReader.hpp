@@ -55,6 +55,15 @@ class FileReader
 #endif
             m_Ifs.close();
         }
+        /* Function : FileExists
+         * Desc     : File is present or not 
+         * Input    : None
+         * Output   : None
+         */
+        bool FileExists()
+        {
+            return m_Ifs.is_open();
+        }
         /* Virtual Destuctor */
         virtual ~FileReader()
         {
