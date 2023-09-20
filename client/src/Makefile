@@ -2,7 +2,7 @@ CC=g++
 CPPFLAGS= -I../../common/inc -I../inc -L../../common/lib -fPIC -g -O0 
 LDFLAGS = -lcommon -ldl -lpthread -lssl -lcrypto
 
-BINSOURCES = UpdateClient.cpp UdpClient.cpp ClientHandler.cpp FunctionalHandler.cpp
+BINSOURCES = UpdateClient.cpp UdpClient.cpp ClientHandler.cpp UdpClientHandler.cpp FunctionalHandler.cpp
 BINARY = UpdateClient 
 BINPATH = ../bin/
 

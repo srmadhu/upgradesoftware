@@ -1,4 +1,4 @@
-#include <ClientHandler.hpp>
+#include <UdpClientHandler.hpp>
 
 
 void PrintUsage(std::string ProgName)
@@ -21,8 +21,8 @@ int main(int argc, char* argv[])
 
     try 
     {
-        std::string IpAddress = argv[1];
-        int Port = std::stoi(argv[2]);
+        IpAddress = argv[1];
+        Port = std::stoi(argv[2]);
     } catch (const std::exception e)
     {
         std::cout<<"Exception : "<<e.what()<<" occured."<<std::endl;
@@ -31,7 +31,7 @@ int main(int argc, char* argv[])
 
     std::cout<<"Main:: Connecting to Server "<<IpAddress<<":"<<Port<<std::endl;
 
-    ClientHandler& cltHandler = ClientHandler::Instance(IpAddress, Port);
+    UdpClientHandler& cltHandler = UdpClientHandler::Instance(IpAddress, Port);
     cltHandler.HandleEvents();
     return EXIT_SUCCESS;
 }

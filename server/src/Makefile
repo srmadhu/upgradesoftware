@@ -3,7 +3,7 @@ CPPFLAGS= -I../../common/inc -I../inc/ -L../../common/lib -fPIC -g -O0
 LDFLAGS = -lcommon -ldl -lpthread
 BINDIR = ../bin/
 
-BINSOURCES = UpdateServer.cpp UdpServer.cpp
+BINSOURCES = UpdateServer.cpp UdpServer.cpp ServerHandler.cpp
 TARGET = UpdateServer 
 
 

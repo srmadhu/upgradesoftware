@@ -1,13 +1,23 @@
 #include <FileWriter.hpp>
 
-
-int FileWriter::WriteFile(char *Buffer, int BufSize)
+/*
+ * Function : WriteFile
+ *     WriteFile writes the passed content if Fd is valid. 
+ * Input    : Buffer - Buffer to be written
+ *            BugSize - Buffer size
+ * Ouput    : Return 0 if success, -1 otherwise.
+ *
+ */
+int FileWriter::WriteFile(const char *Buffer, int BufSize)
 {
-    if (ofs.eof())
+    if (m_Ofs.bad() || !m_Ofs.is_open())
     {
-        std::cout<<"END OF FILE reached."<<std::endl;
+        std::cerr<<"Writing to "<<m_FileName<<" failed"<<std::endl;
         return -1;
     }
-    ofs.write(Buffer, BufSize);
+#ifdef DEBUG
+    std::cout<<"Writing "<<BufSize<<" into "<<m_FileName<<std::endl;
+#endif
+    m_Ofs.write(Buffer, BufSize);
     return 0;
 }
