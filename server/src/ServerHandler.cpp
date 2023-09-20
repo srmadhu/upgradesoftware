@@ -64,20 +64,30 @@ void ServerHandler::HandleCliMessage(std::string cmdLine)
 }
 void ServerHandler::HandleEvents()
 {
-    fd_set readFdSet;
-    int maxfd = 0;
-    FD_ZERO(&readFdSet);
-
-    int udpFd = udpServ.GetSocketFd();
  
-    maxfd = std::max(udpFd, 0) + 1;
- 
-    while (1)
+    for(;;)
     {
-        int ready = 0, Len = 0;
+        int ready = 0, maxFd = 0;
+        int udpFd = udpServ.GetSocketFd();
+        struct timeval tv;
+        fd_set readFdSet;
+        
+        /* Handle both client messages and user input */
+        FD_ZERO(&readFdSet);
         FD_SET(udpFd, &readFdSet);
         FD_SET(fileno(stdin), &readFdSet);
+        maxfd = std::max(udpFd, 0) + 1;
+        tv.tv_sec = 10; tv.tv_usec 0;
+        std::cout<<std::endl<<"NxtServer# ";
+        std::cout.flush();
         ready = select(maxfd, &readFdSet, NULL, NULL, NULL);
+
+        /* if select returned error, still continue; */
+        if ( ready < 0)
+        {
+            std::cout<<"Select return socket error : "<<errno<<std::endl;
+            continue;
+        }
  
         if (FD_ISSET(udpFd, &readFdSet))
         {
