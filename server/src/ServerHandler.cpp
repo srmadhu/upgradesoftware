@@ -76,11 +76,11 @@ void ServerHandler::HandleEvents()
         FD_ZERO(&readFdSet);
         FD_SET(udpFd, &readFdSet);
         FD_SET(fileno(stdin), &readFdSet);
-        maxfd = std::max(udpFd, 0) + 1;
-        tv.tv_sec = 10; tv.tv_usec 0;
+        maxFd = std::max(udpFd, 0) + 1;
+        tv.tv_sec = 10; tv.tv_usec = 0;
         std::cout<<std::endl<<"NxtServer# ";
         std::cout.flush();
-        ready = select(maxfd, &readFdSet, NULL, NULL, NULL);
+        ready = select(maxFd, &readFdSet, NULL, NULL, NULL);
 
         /* if select returned error, still continue; */
         if ( ready < 0)

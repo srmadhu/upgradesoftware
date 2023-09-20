@@ -1,4 +1,6 @@
-client/bin/
-client/bin
-server/bin
-common/lib/
+client/bin/UpdateClient
+client/bin/libVersion.so
+common/lib/libcommon.so
+common/lib/libversion_1_0.so
+common/lib/libversion_2_0.so
+server/bin/UpdateServer
