@@ -18,7 +18,7 @@ int main()
     std::string test = "testing hello back";
     udpSkt.BindSocket("127.0.0.1", 5000);
     udpSkt.RecvFrom(Buffer, sizeof(Buffer), RemoteAddr, Len);
-    msg.type = MSG_FILENAME;
+    msg.type = MSG_SWDLFLNAME;
     msg.Buffer = "test.so";
     udpSkt.SendTo(Buffer, sizeof(Buffer), RemoteAddr, Len);
     while((count = fr.ReadFile(Buffer, 1024))>0)

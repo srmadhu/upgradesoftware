@@ -1,4 +1,3 @@
-#include <iostream>
 #include <ClientHandler.hpp>
 
 
@@ -12,17 +11,27 @@ void PrintUsage(std::string ProgName)
 
 int main(int argc, char* argv[])
 {
+    std::string IpAddress = ""; 
+    int Port = 0;
     if (argc != 3)
     {
         PrintUsage(argv[0]);
         return 0;
     }
-    std::string IpAddress = argv[1];
-    int Port = std::stoi(argv[2]);
+
+    try 
+    {
+        std::string IpAddress = argv[1];
+        int Port = std::stoi(argv[2]);
+    } catch (const std::exception e)
+    {
+        std::cout<<"Exception : "<<e.what()<<" occured."<<std::endl;
+        return EXIT_FAILURE;
+    }
 
     std::cout<<"Main:: Connecting to Server "<<IpAddress<<":"<<Port<<std::endl;
 
-    ClientHandler clientHandler(IpAddress, Port);
-    clientHandler.HandleEvents();
-    return 0;
+    ClientHandler& cltHandler = ClientHandler::Instance(IpAddress, Port);
+    cltHandler.HandleEvents();
+    return EXIT_SUCCESS;
 }

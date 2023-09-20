@@ -30,25 +30,29 @@ void verify_class_dlopen();
 class ClientHandler
 {
     public:
-        /* No default constructor */
-        ClientHandler() = delete;
-        ClientHandler(std::string IpAddress, int Port): m_UdpClt(IpAddress, Port)
-        {
-            m_ClientState = STATE_INIT;
-            SendRegister();
-            verify_class_dlopen();
-        }
         void SendRegister();
         void SendMessage(MsgTypeEnum msgType);
         void HandleClientMessage(void *Buffer, size_t BufLen, std::string PeerAddr);
         void HandleCliMessage(std::string cmdLine);
 
         void HandleEvents();
+        static ClientHandler& Instance(std::string IpAddress, int Port)
+        {
+            static ClientHandler cltHandler(IpAddress, Port);
+            return cltHandler;
+        }
 
     private:
         FileWriter m_FileWriter;
         std::string m_FileName = "";
         StateEnum m_ClientState;
         UdpClient m_UdpClt;
-
+        /* No default constructor */
+        ClientHandler() = delete;
+        ClientHandler(std::string IpAddress, int Port): m_UdpClt(IpAddress, Port)
+        {
+            m_ClientState = CL_STATE_INIT;
+            SendRegister();
+            verify_class_dlopen();
+        }
 };

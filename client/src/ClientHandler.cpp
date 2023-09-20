@@ -33,8 +33,8 @@ void ClientHandler::SendMessage(MsgTypeEnum msgType)
 void ClientHandler::SendRegister()
 {
     /* Assumption is server is already started */
-    SendMessage(MSG_REGISTER);
-    m_ClientState = STATE_REGISTER;
+    SendMessage(MSG_CLREGISTER);
+    m_ClientState = CL_STATE_REGISTER;
 }
 void ClientHandler::HandleClientMessage(void *Buffer, size_t BufLen, std::string PeerAddr)
 {
@@ -43,12 +43,12 @@ void ClientHandler::HandleClientMessage(void *Buffer, size_t BufLen, std::string
 
     switch(msg->msgType)
     {
-        case MSG_REGDONE:
+        case MSG_CLREGDONE:
         {
-            m_ClientState = STATE_REGDONE;
+            m_ClientState = CL_STATE_REGDONE;
             break;
         }
-        case MSG_FILENAME:
+        case MSG_SWDLFLNAME:
         {
             std::cout<<"FileName Request Received from "<<PeerAddr<<std::endl;
             msg->Buffer[msg->Length] = '\0';
@@ -57,7 +57,7 @@ void ClientHandler::HandleClientMessage(void *Buffer, size_t BufLen, std::string
             m_FileWriter.SetFileName(m_FileName);
             break;
         }
-        case MSG_SENDFILE:
+        case MSG_SWDLFILE:
         {
             std::cout<<"SendFile Request Received from "<<PeerAddr<<std::endl;
             std::cout<<"Message buffer length "<<msg->Length<<std::endl;
@@ -66,7 +66,7 @@ void ClientHandler::HandleClientMessage(void *Buffer, size_t BufLen, std::string
             m_FileWriter.WriteFile(msg->Buffer, msg->Length);
             break;
         }
-        case MSG_FILEEND:
+        case MSG_SWDLCMPT:
         {
             std::cout<<"EndFile Request Received from "<<PeerAddr<<std::endl;
             m_FileWriter.CloseFile();
@@ -135,7 +135,7 @@ void ClientHandler::HandleEvents()
         }
         else
         {
-            if ( m_ClientState == STATE_REGISTER)
+            if ( m_ClientState == CL_STATE_REGISTER)
             {
                        SendRegister();
             }
