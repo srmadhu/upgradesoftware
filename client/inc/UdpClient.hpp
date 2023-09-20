@@ -7,22 +7,21 @@
 #include <arpa/inet.h>
 #include <cstring>
 
-#define BUFSIZE 1024
-
 class UdpClient
 {
     public:
+        /* Constructor : Stores Ipaddress/Port into member */
         UdpClient(std::string IpAddress, int Port);
         void Send(const void *Buffer, size_t BufLen);
         void Recv(void *Buffer, size_t BufLen, std::string &PeerAddr);
         int GetSocketFd()
         {
-            return udpSkt.GetSocketFd();
+            return m_UdpSkt.GetSocketFd();
         }
 
     private:
-        UdpSocket udpSkt;
-        struct sockaddr_in RemoteAddr;
-        socklen_t Len;
+        UdpSocket m_UdpSkt;
+        struct sockaddr_in m_RemoteAddr;
+        socklen_t m_Len;
 };
 

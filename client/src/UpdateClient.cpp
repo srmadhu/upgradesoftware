@@ -32,6 +32,6 @@ int main(int argc, char* argv[])
     std::cout<<"Main:: Connecting to Server "<<IpAddress<<":"<<Port<<std::endl;
 
     UdpClientHandler& cltHandler = UdpClientHandler::Instance(IpAddress, Port);
-    cltHandler.HandleEvents();
+    cltHandler.RecvMessage();
     return EXIT_SUCCESS;
 }

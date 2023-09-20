@@ -25,21 +25,14 @@
 #define PORT     8080
 #define MAXLINE 1024
 
-void UdpClientHandler::SendMessage(MsgTypeEnum msgType)
+/* Function : RecvMessage
+ * Desc     : Recv message from remote peer. Handles
+ *              action handling for the message.
+ * Input    : None
+ * Len      : None
+ */
+void UdpClientHandler::RecvMessage()
 {
-    UpdateMsg_t msg;
-    msg.msgType = msgType;
-    std::cout<<"Sending Message "<<msgType<<std::endl;
-    m_UdpClt.Send(&msg, sizeof(msg));
-}
-void UdpClientHandler::SendRegister()
-{
-    SendMessage(MSG_CLREGISTER);
-    SetClientState(CL_STATE_REGISTER);
-}
-void UdpClientHandler::HandleEvents()
-{
-
     std::cout<<std::endl<<"NxtClient# ";
     for(;;)
     {
@@ -58,15 +51,11 @@ void UdpClientHandler::HandleEvents()
         std::cout.flush();
         ready = select(maxFd, &readFdSet, NULL, NULL, &tv);
 
-        /* Irrespective of timeout of events, attempt register */
-        if ( GetClientState() == CL_STATE_REGISTER)
-        {
-            SendRegister();
-        }
+        TimerCallback();
         /* if select returned error, still continue */
         if (ready < 0)
         {
-            std::cout<<"Select return socket error : "<<errno<<std::endl;
+            std::cerr<<"Select return socket error : "<<errno<<std::endl;
             continue;
         } 
                 

@@ -46,8 +46,7 @@ void ServerHandler::HandleCliMessage(std::string cmdLine)
         msg.Length = cmd[1].length();
 
         udpServ.Send(&msg, sizeof(msg));
-        std::string FileName = "/tmp/";
-        FileName += cmd[1];
+        std::string FileName = cmd[1];
         FileReader fr(FileName);
         while( (bytesRead = fr.ReadFile(Buffer, sizeof(Buffer))) > 0)
         {

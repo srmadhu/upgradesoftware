@@ -8,10 +8,10 @@ OBJECTS = $(SOURCES:.cpp=.o)
 TARGET = libcommon.so
 
 LIBVER1_SOURCES = ActionHandler56.cpp
-LIBVER1 = libversion_1_0.so
+LIBVER1 = libfunctional_1_0.so
 
 LIBVER2_SOURCES = ActionHandler86.cpp
-LIBVER2 = libversion_2_0.so
+LIBVER2 = libfunctional_2_0.so
 
 build: $(TARGET) $(LIBVER1) $(LIBVER2)
 

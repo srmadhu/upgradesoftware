@@ -24,6 +24,13 @@
 #define PORT     8080
 #define MAXLINE 1024
 
+/* Function : HandleClientMessage
+ * Desc     : Handles message from server 
+ * Input    : Buffer - message received from server
+ *            BufLen - length of the message
+ *            PeerAddr - Peer details if any
+ * Output   : None
+ */
 void ClientHandler::HandleClientMessage(void *Buffer, size_t BufLen, std::string PeerAddr)
 {
     UpdateMsg_t *msg = (UpdateMsg_t  *) Buffer;
@@ -41,22 +48,30 @@ void ClientHandler::HandleClientMessage(void *Buffer, size_t BufLen, std::string
             std::cout<<"FileName Request Received from "<<PeerAddr<<std::endl;
             msg->Buffer[msg->Length] = '\0';
             m_FileName = msg->Buffer;
+#ifdef DEBUG
             std::cout<<"m_FileName is "<<m_FileName<<std::endl;
+#endif
             m_FileWriter.OpenFile(m_FileName);
             break;
         }
         case MSG_SWDLFILE:
         {
+#ifdef DEBUG
             std::cout<<"SendFile Request Received from "<<PeerAddr<<std::endl;
             std::cout<<"Message buffer length "<<msg->Length<<std::endl;
+#endif
             size += msg->Length;
+#ifdef DEBUG
             std::cout<<"Total Size = "<<size<<std::endl;
+#endif
             m_FileWriter.WriteFile(msg->Buffer, msg->Length);
             break;
         }
         case MSG_SWDLCMPT:
         {
+#ifdef DEBUG
             std::cout<<"EndFile Request Received from "<<PeerAddr<<std::endl;
+#endif
             m_FileWriter.CloseFile();
             remove("libfunctional.so");
             symlink(m_FileName.c_str(), "libfunctional.so");

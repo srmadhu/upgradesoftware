@@ -13,7 +13,7 @@ void verify_class_dlopen()
 {
     void *handle;
     char *error;
-    const char *FileName = "libfunctional.so";
+    const char *FileName = "./libfunctional.so";
 
     /* dlopen to open the file */
     handle = dlopen(FileName, RTLD_LAZY);

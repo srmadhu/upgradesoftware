@@ -31,22 +31,49 @@ void verify_class_dlopen();
 class UdpClientHandler: public ClientHandler
 {
     public:
-        void SendRegister();
-        void SendMessage(MsgTypeEnum msgType);
-        void HandleEvents();
+        /* Function : SendMessage
+         * Desc     : Send buffer with Len to Udp peer
+         * Input    : Buffer - Message to be sent
+         * Len      : Size of message 
+         */
+        void SendMessage(void *Buffer, size_t Len)
+        {
+ #ifdef DEBUG
+            std::cout<<"Sending Message from UdpClientHandler"<<std::endl;
+ #endif
+            m_UdpClt.Send(Buffer, Len);
+        }
+        /* Function : RecvMessage
+         * Desc     : Recv message from remote peer. Handles
+         *              action handling for the message.
+         * Input    : None
+         * Len      : None
+         */
+        void RecvMessage();
 
+        /* Function : Instance
+         * Desc     : Creating UdpClientHandler instance
+         * Input    : IpAddress - Remote Ip Address
+         *            Port      - Remote Port
+         * Output   : UdpClientHandler instance 
+         */
         static UdpClientHandler& Instance(std::string IpAddress, int Port)
         {
             static UdpClientHandler cltHandler(IpAddress, Port);
             return cltHandler;
         }
 
-    private:
+    protected:
         /* No default constructor */
         UdpClientHandler() = delete;
+        /* UdpClientHandler constructor */
         UdpClientHandler(std::string IpAddress, int Port): m_UdpClt(IpAddress, Port)
         {
-            SendRegister();
+ #ifdef DEBUG
+            std::cout<<"UdpClientHandler:: constructor is called "<<std::endl;
+ #endif
         }
+    private:
+        /* UdpClient object */
         UdpClient m_UdpClt;
 };
