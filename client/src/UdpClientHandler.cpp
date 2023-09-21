@@ -35,6 +35,7 @@ void UdpClientHandler::RecvMessage()
 {
     std::cout<<std::endl<<"NxtClient# ";
     int udpFd = m_UdpClt.GetSocketFd();
+
     for(;;)
     {
         int ready = 0, maxFd = 0;
@@ -49,9 +50,9 @@ void UdpClientHandler::RecvMessage()
         FD_SET(fileno(stdin), &readFdSet);
         tv.tv_sec = 10; tv.tv_usec = 0;
         std::cout.flush();
+        TimerCallback();
         ready = select(maxFd, &readFdSet, NULL, NULL, &tv);
 
-        TimerCallback();
         /* if select returned error, still continue */
         if (ready < 0)
         {

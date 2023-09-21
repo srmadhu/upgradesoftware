@@ -1,5 +1,5 @@
 CC=g++
-CPPFLAGS= -I../inc -fPIC -g -O0 
+CPPFLAGS= -I../inc -fPIC -g -O0
 LDFLAGS = -shared -ldl -lpthread
 LIBPATH = ../lib/
 

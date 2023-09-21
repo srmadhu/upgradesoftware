@@ -34,6 +34,9 @@ Improvements:
     * Client provide option to upgrade later after downloading. 
     * Server load balancing.
 
+To Download Source:
+    git clone https://github.com/srmadhu/upgradesoftware.git
+
 To Compile:
     Execute "make" to compile client, server and common modules. 
 

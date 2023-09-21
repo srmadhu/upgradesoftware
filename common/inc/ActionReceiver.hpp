@@ -12,7 +12,7 @@ class ActionReceiver
         ActionReceiver(): actionType (0)
         {
 #ifdef DEBUG
-            std::cout<<"Action Template1 constructor called"<<stendl;
+            std::cout<<"Action Template1 constructor called"<<std::endl;
 #endif
         }
         void setActionType(int argActionType)
