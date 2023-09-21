@@ -18,6 +18,7 @@ Alternatives/Limitations:
         client downloads new library. 
     * Implement docker images for client and server to run in different environments. 
     * Only single client is supported. 
+    * Only tar is supported to install on multiple flavors of linux
     
       
 Improvements:
@@ -36,6 +37,11 @@ Improvements:
 
 To Download Source:
     git clone https://github.com/srmadhu/upgradesoftware.git
+
+System Requriements:
+    Ubuntu 22.04.1 LTS (jammy)
+    > sudo apt-get install gcc
+
 
 To Compile:
     Execute "make" to compile client, server and common modules. 
