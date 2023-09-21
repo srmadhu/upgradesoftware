@@ -8,12 +8,17 @@ Server CLI supports push command to push new software to registered client.
 Alternatives/Limitations:
     * UDP transport used between client and server to reduce packer traffic due to 
         TCP keep alives and session maintanence. 
+        - ClientHandler can be extended with different transport mechanisms to send/receive
+        packets from/to server. 
     * Server CLI added to support simplified push action. Alternatvie approach isto use 
         another application connect to server through message query to execute push action. 
     * Used libfunctional.so to implement functional part and used dyamic loading to support
         print version without client application restart. 
-        Alternative: Use another application connect through message queue and restart when 
+        Alternative: Use another agent application connect through message queue and restart when 
         client downloads new library. 
+    * Implement docker images for client and server to run in different environments. 
+    * Only single client is supported. 
+    
       
 Improvements:
     * Support Ipv6 transport along with Ipv4. 
